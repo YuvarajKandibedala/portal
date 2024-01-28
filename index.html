@@ -7,14 +7,14 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #e6f2ff;
+            background-color: #f0f3f5;
             margin: 0;
             padding: 0;
         }
         header {
-            background-color: #003399;
+            background-color: #3498db;
             color: #fff;
-            padding: 10px;
+            padding: 20px;
             text-align: center;
         }
         main {
@@ -27,47 +27,52 @@
         }
         section {
             background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-            padding: 20px;
-            flex-basis: 48%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            padding:45px;
+            flex-basis: calc(43.33% - 30px);
             margin-bottom: 20px;
         }
         h2 {
             margin-top: 0;
         }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        select {
+            width: calc(100% - 22px);
+        }
+        textarea {
+            resize: none;
+        }
+        .button-group {
+            margin-top: 20px;
+        }
         button {
-            background-color: #003399;
+            background-color: #3498db;
             color: #fff;
             border: none;
             border-radius: 5px;
-            padding: 10px;
+            padding: 10px 20px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        th {
-            text-align: left;
-        }
-        .notifications, .settings {
-            flex-basis: 22%;
-        }
-        @media screen and (max-width: 768px) {
-            main {
-                flex-direction: column;
-            }
-            section {
-                flex-basis: 100%;
-            }
-            .notifications, .settings {
-                flex-basis: 100%;
-            }
+        button:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
@@ -78,13 +83,35 @@
     <main>
         <section>
             <h2>Profile Information</h2>
-            <form>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" value="John Doe" readonly><br><br>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="johndoe@example.com" readonly><br><br>
-                <button type="button" onclick="editProfile()">Edit Profile</button>
-                <button type="submit" id="saveProfile" style="display:none">Save Profile</button>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="John Doe" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="johndoe@example.com" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" value="25" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" disabled>
+                        <option value="male" selected>Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" rows="3" readonly>123 Street, City, Country</textarea>
+                </div>
+                <div class="button-group">
+                    <button type="button" onclick="editProfile()">Edit Profile</button>
+                    <button type="submit" id="saveProfile" style="display:none">Save Profile</button>
+                </div>
             </form>
         </section>
         <section>
@@ -92,25 +119,20 @@
             <button onclick="viewInternshipListings()">View Internship Listings</button>
         </section>
         <section>
-            <h2>Application Status</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Internship Title</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Software Engineering Intern</td>
-                        <td>Pending</td>
-                    </tr>
-                    <tr>
-                        <td>Web Development Intern</td>
-                        <td>Under Review</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h2>Course Schedule</h2>
+            <ul>
+                <li>Mathematics - Monday, 10:00 AM</li>
+                <li>Science - Tuesday, 11:30 AM</li>
+                <li>History - Thursday, 9:00 AM</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Calendar</h2>
+            <p>Upcoming Deadlines:</p>
+            <ul>
+                <li>Math Assignment - Due: Feb 5</li>
+                <li>Science Project - Due: Feb 10</li>
+            </ul>
         </section>
         <section class="notifications">
             <h2>Notifications</h2>
@@ -133,11 +155,32 @@
     </main>
 
     <script>
-        // JavaScript functions here
+        // JavaScript functions
         function editProfile() {
-            document.getElementById('name').readOnly = false;
-            document.getElementById('email').readOnly = false;
+            var form = document.getElementById('profileForm').elements;
+            for (var i = 0; i < form.length; i++) {
+                form[i].readOnly = false;
+                form[i].disabled = false;
+            }
             document.getElementById('saveProfile').style.display = 'inline-block';
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+            saveProfile();
+        });
+
+        function saveProfile() {
+            var form = document.getElementById('profileForm').elements;
+            var profileData = {};
+            for (var i = 0; i < form.length; i++) {
+                profileData[form[i].name] = form[i].value;
+                form[i].readOnly = true;
+                form[i].disabled = true;
+            }
+            // Send profileData to server or perform any necessary actions
+            alert("Profile saved successfully!");
+            document.getElementById('saveProfile').style.display = 'none';
         }
 
         function viewInternshipListings() {
@@ -150,8 +193,8 @@
 
         function updateSettings() {
             // Logic to update notification settings
-            let emailNotification = document.getElementById('emailNotification').checked;
-            let smsNotification = document.getElementById('smsNotification').checked;
+            var emailNotification = document.getElementById('emailNotification').checked;
+            var smsNotification = document.getElementById('smsNotification').checked;
             // Send settings to server or perform any necessary actions
             alert("Settings updated successfully!");
             return false; // Prevent form submission
