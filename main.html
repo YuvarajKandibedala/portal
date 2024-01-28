@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student Dashboard</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #e6f2ff;
+			margin: 0;
+			padding: 0;
+		}
+		header {
+			background-color: #003399;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+		main {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			padding: 20px;
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+		section {
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+			padding: 20px;
+			flex-basis: 48%;
+			margin-bottom: 20px;
+		}
+		h2 {
+			margin-top: 0;
+		}
+		button {
+			background-color: #003399;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			padding: 10px;
+			cursor: pointer;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+		th, td {
+			padding: 10px;
+			border-bottom: 1px solid #ccc;
+		}
+		th {
+			text-align: left;
+		}
+		.notifications {
+			flex-basis: 22%;
+		}
+		.settings {
+			flex-basis: 22%;
+		}
+		@media screen and (max-width: 768px) {
+			main {
+				flex-direction: column;
+			}
+			section {
+				flex-basis: 100%;
+			}
+			.notifications, .settings {
+				flex-basis: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Student Dashboard</h1>
+	</header>
+	<main>
+		<section>
+			<h2>Profile Information</h2>
+			<p>Name: John Doe</p>
+			<p>Email: johndoe@example.com</p>
+		</section>
+		<section>
+			<h2>Apply for Internship</h2>
+			<button>View Internship Listings</button>
+		</section>
+		<section>
+			<h2>Application Status</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Internship Title</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Software Engineering Intern</td>
+						<td>Pending</td>
+					</tr>
+					<tr>
+						<td>Web Development Intern</td>
+						<td>Under Review</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<section class="notifications">
+			<h2>Notifications</h2>
+			<ul>
+				<li>New internship opportunity: Software Engineering Intern</li>
+				<li>Application status update: Web Development Intern is now under review</li>
+			</ul>
+			<button>View All Notifications</button>
+		</section>
+		<section class="settings">
+			<h2>Settings</h2>
+			<p>Notification Preferences:</p>
+			<ul>
+				<li><input type="checkbox" name="email" id="email"> Email</li>
+				<li><input type="checkbox" name="sms" id="sms"> SMS</li>
+			</ul>
+			<button>Update Profile Information</button>
+		</section>
+	</main>
+</body>
+</html>
